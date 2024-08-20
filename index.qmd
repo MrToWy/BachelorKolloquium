@@ -1,19 +1,18 @@
 ---
-title: "Quarto Presentations"
-subtitle: "Create beautiful interactive slide decks with Reveal.js"
+title: "Bachelor Kolloquium"
+subtitle: "Konzeption und Entwicklung eines Systems zur Verwaltung und Erstellung von Modulhandbüchern"
 date: now
-date-format: "MMM D, YYYY"
+date-format: "D. MMMM YYYY"
 format:
   revealjs:
-    header: Header
-    header-logo: images/hsh.svg
+    header: Bachelor Kolloquium
     slide-number: true
     chalkboard:
       buttons: false
     preview-links: auto
     logo: images/hsh.svg
     css: styles.css
-    footer: TobiasW
+    footer: Tobias Wylega
     theme: serif
     template-partials:
         - title-slide.html
@@ -26,11 +25,69 @@ filters:
 
 ---
 
-## Hello, There!
+# Modulhandbücher
+- Was sind Modulhandbücher?
+- Warum sind sie wichtig?
+- Wie werden sie erstellt?
 
-This presentation ^[A footnote] will show you examples of what you can do with Quarto and [Reveal.js](https://revealjs.com), including:
+## Was sind Modulhandbücher?
+::: {.columns}
 
-[LiveDemo](#demo){ .btn .btn-outline-primary role="button"}
+::: {.column width="50%"}
+Studiengänge sind in Module unterteilt.
+
+Jedes Modul hat eine Beschreibung.
+:::
+
+::: {.column width="50%"}
+![](images/handbuch.png)
+:::
+:::
+
+## Bisheriger Prozess
+- Modulhandbücher werden in Word erstellt
+
+### 1. Verbesserung
+- Modulhandbücher wurden in Datenbank überführt
+- Aus Datenbank wurden PDFs generiert
+
+
+## Probleme
+Direkter Zugriff auf Datenbank bringt Probleme mit sich:
+
+- Software notwendig
+- Keine Versionierung
+- Keine Validierung
+- Datenbank selbst enthält noch Redundanzen
+
+-> Neues System notwendig
+
+
+# Zielgruppe
+Wer wird das neue System nutzen?
+
+## Interessierte & Studierende
+
+Welche Inhalte bietet das Studium?
+
+Welche Wahlpflichtmodule gibt es?
+
+Welche Vorraussetzungen gibt es für Modul X?
+
+
+
+## Dozierende
+Aktualisieren von Modulbeschreibungen
+
+## Studiendekan
+Veröffentlichung von Modulhandbüchern
+
+
+
+
+
+
+
 
 ## Code
 

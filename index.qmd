@@ -1,0 +1,117 @@
+---
+title: "Quarto Presentations"
+subtitle: "Create beautiful interactive slide decks with Reveal.js"
+date: now
+date-format: "MMM D, YYYY"
+format:
+  revealjs:
+    header: Header
+    header-logo: images/hsh.svg
+    slide-number: true
+    chalkboard:
+      buttons: false
+    preview-links: auto
+    logo: images/hsh.svg
+    css: styles.css
+    footer: TobiasW
+    theme: serif
+    template-partials:
+        - title-slide.html
+revealjs-plugins:
+  - attribution
+resources:
+  - demo.pdf
+filters:
+  - reveal-header
+
+---
+
+## Hello, There!
+
+This presentation ^[A footnote] will show you examples of what you can do with Quarto and [Reveal.js](https://revealjs.com), including:
+
+[LiveDemo](#demo){ .btn .btn-outline-primary role="button"}
+
+## Code
+
+```python{.python code-line-numbers="2|4"}
+n = 0
+while n < 10:
+  if n % 2 == 0:
+    print(f"{n} is even")
+  n += 1
+```
+
+::: footer
+Custom footer text
+:::
+
+::: header
+
+Custom Header
+
+:::
+
+::: {.attribution}
+Photo courtesy of [@ingtotheforest](https://unsplash.com/@ingtotheforest)
+:::
+
+## Columns
+:::: {.columns}
+
+::: {.column width="60%"}
+```python{.python code-line-numbers="2|4"}
+n = 0
+while n < 10:
+  if n % 2 == 0:
+    print(f"{n} is even")
+  n += 1
+```
+:::
+
+::: {.column width="40%"}
+Erklärender Text
+
+- first item ^[A footnote]
+    - A sub item
+:::
+
+::::
+
+## Code Animated {auto-animate="true"}
+
+```python
+n = 0
+while n < 10:
+  n += 1
+```
+
+## Code Animated 2 {auto-animate="true"}
+
+```python
+n = 0
+while n < 10:
+  if n % 2 == 0:
+    print(f"{n} is even")
+  n += 1
+```
+
+## Code Animated 3 {auto-animate="true"}
+
+```python
+n = 0
+while n < 10:
+  if n % 2 == 0:
+    print(f"{n} is even")
+  else:
+    print(f"{n} is odd")
+  n += 1
+```
+
+# new slide
+with text
+
+## {#demo}
+```{=html}
+<iframe width="780" height="500" src="https://studymodules.tobi.win/faculties" title="Webpage example"></iframe>
+```

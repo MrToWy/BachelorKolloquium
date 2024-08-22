@@ -187,13 +187,63 @@ Implementierung
 |   | Bootstrap  | PrimeNG  |
 |--------|--------|--------|
 | Weekly Downloads  | 424,283   | 355,443   |
+| ...  | ...   | ...   |
 | Anzahl Komponenten | ~25   | ~100   |
 
 
 
 ## Übersetzbarkeit
+::: header
+Implementierung
+:::
 
+::: {.fragment}
+- Angular i18n
+    - Einrichtung ist aufwändig
+    - Keine zentrale Übersetzungsdatei
+:::
+::: {.fragment}
+- Transloco
+    - Einfache Einrichtung
+    - Zentrale Übersetzungsdatei
+:::
 
+## Übersetzbarkeit - Beispiel {auto-animate="true"}
+HTML-Template:
+
+::: {data-id="box2"}
+```html
+<ng-container *transloco="let t">
+</ng-container>
+```
+:::
+
+## Übersetzbarkeit - Beispiel {auto-animate="true"}
+HTML-Template:
+
+::: {data-id="box2"}
+```html
+<ng-container *transloco="let t">
+  <p>{{ t('title') }}</p>
+</ng-container>
+```
+:::
+
+::: {.fragment}
+TypeScript-Datei:
+```ts
+console.log(translate('title'));
+```
+:::
+
+::: {.fragment}
+Übersetzungsdatei:
+```json
+{
+  "title": "Titel"
+}
+```
+:::
 
 
 

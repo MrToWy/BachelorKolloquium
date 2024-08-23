@@ -70,10 +70,11 @@ Modulhandbücher
 :::
 - Modulhandbücher werden in Word erstellt
 
+::: {.fragment}
 ### 1. Verbesserung
 - Modulhandbücher wurden in Datenbank überführt
 - Aus Datenbank wurden PDFs generiert
-
+:::
 
 ## Probleme
 ::: header
@@ -81,12 +82,15 @@ Modulhandbücher
 :::
 Direkter Zugriff auf Datenbank bringt Probleme mit sich:
 
+::: {.incremental}
 - Software notwendig
 - Keine Versionierung
 - Keine Validierung
 - Datenbank selbst enthält noch Redundanzen
+- -> Neues System notwendig
+:::
 
--> Neues System notwendig
+
 
 
 # Zielgruppe
@@ -111,9 +115,10 @@ Zielgruppe
 ### Dozierende
 Aktualisieren von Modulbeschreibungen
 
+::: {.fragment}
 ### Studiendekan
 Veröffentlichung von Modulhandbüchern
-
+:::
 
 # Anforderungen
 Auszug aus den Anforderungen
@@ -123,10 +128,11 @@ Auszug aus den Anforderungen
 Anforderungen
 :::
 
+::: {.incremental}
 - Angular Frontend
 - NestJS Backend
 - Prisma ORM
-
+:::
 
 # Entwurf
 - Wie muss die Datenbank strukturiert sein?

@@ -197,11 +197,10 @@ Implementierung
 Implementierung
 :::
 
-::: {.fragment}
 - Angular i18n
     - Einrichtung ist aufwändig
     - Keine zentrale Übersetzungsdatei
-:::
+
 ::: {.fragment}
 - Transloco
     - Einfache Einrichtung
@@ -222,7 +221,7 @@ HTML-Template:
 HTML-Template:
 
 ::: {data-id="box2"}
-```html
+```html{ code-line-numbers="2"}
 <ng-container *transloco="let t">
   <p>{{ t('title') }}</p>
 </ng-container>
@@ -246,89 +245,118 @@ console.log(translate('title'));
 :::
 
 
+## Dynamische Übersetzungen
+::: header
+Implementierung
+:::
 
+```ts {code-line-numbers="1|11|17-21"}
+export class LanguageInterceptor implements HttpInterceptor {
+  private language: string;
 
+  constructor(private languageService: LanguageService) {
+    this.language = this.languageService.languageCode;
+    this.languageService.languageSubject.subscribe((language) => {
+      this.language = language;
+    });
+  }
 
-## Code
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (req.headers.has('language')) {
+      return next.handle(req);
+    }
 
-```python{.python code-line-numbers="2|4"}
-n = 0
-while n < 10:
-  if n % 2 == 0:
-    print(f"{n} is even")
-  n += 1
+    if (this.language) {
+      const newRequest = req.clone({
+        setHeaders: {
+          'language': this.language.toUpperCase()
+        }
+      });
+      return next.handle(newRequest);
+    }
+    return next.handle(req);
+  }
+}
 ```
+
+## Modulbearbeitung
+✅ Übersetzbarkeit
+
+✅ Datenbank mit benötigten Tabellen
+
+🔜 Wie werden die Daten erstellt / bearbeitet?
+
+## Modulbearbeitung - Komponenten
+::: header
+Implementierung
+:::
+
+![](images/translator.svg)
+
+## Modulbearbeitung - Komponenten
+::: header
+Implementierung
+:::
+
+<iframe style="background-color: white;" src="https://studymodules.tobi.win/submodules/1" width="100%" height="75%" style="border: none;"></iframe>
+::: footer
+[Link zur Demo](https://studymodules.tobi.win/submodules/1)
+:::
+
+
+## PDF-Generierung
+::: header
+Implementierung
+:::
+
+<iframe style="background-color: white;" src="https://studymodules.tobi.win/faculty/4/department/2" width="100%" height="75%" style="border: none;"></iframe>
 
 ::: footer
-Custom footer text
+[Link zur Demo](https://studymodules.tobi.win/faculty/4/department/2)
 :::
 
+## Architektur Übersicht
 ::: header
+Implementierung
+:::
+![](images/Docker.png)
 
-Custom Header
+# Fazit
 
+
+## 
+::: header
+Fazit
 :::
 
-::: {.attribution}
-Photo courtesy of [@ingtotheforest](https://unsplash.com/@ingtotheforest)
+```{mermaid}
+pie title Anforderungen
+    "Erfüllt" : 43
+    "Vermutlich erfüllt" : 3
+    "Vorbereitet" : 8
+    "Nicht erfüllt" : 10
+```
+
+## Anforderungen
+::: header
+Fazit
 :::
 
-## Columns
-:::: {.columns}
+### Studierende
+✅ Angebotene Module können eingesehen werden
 
-::: {.column width="60%"}
-```python{.python code-line-numbers="2|4"}
-n = 0
-while n < 10:
-  if n % 2 == 0:
-    print(f"{n} is even")
-  n += 1
-```
+::: {.fragment}
+✅ Modulhandbücher können heruntergeladen werden
 :::
 
-::: {.column width="40%"}
-Erklärender Text
-
-- first item ^[A footnote]
-    - A sub item
+::: {.fragment}
+### Dozierende
+✅ Modulhandbücher können erstellt und bearbeitet werden
 :::
 
-::::
+# Ausblick
 
-## Code Animated {auto-animate="true"}
-
-```python
-n = 0
-while n < 10:
-  n += 1
-```
-
-## Code Animated 2 {auto-animate="true"}
-
-```python
-n = 0
-while n < 10:
-  if n % 2 == 0:
-    print(f"{n} is even")
-  n += 1
-```
-
-## Code Animated 3 {auto-animate="true"}
-
-```python
-n = 0
-while n < 10:
-  if n % 2 == 0:
-    print(f"{n} is even")
-  else:
-    print(f"{n} is odd")
-  n += 1
-```
-
-# new slide
-with text
-
-## {#demo}
-```{=html}
-<iframe width="780" height="500" src="https://studymodules.tobi.win/faculties" title="Webpage example"></iframe>
-```
+# Vielen Dank!
+- Freunde und Familie
+- Betreuer
+- Dozierende die für Interviews zur Verfügung standen

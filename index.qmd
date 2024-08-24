@@ -440,6 +440,39 @@ Fazit
 
 # Ausblick
 
+## Offene ToDos
+::: header
+Ausblick
+:::
+
+::: {.incremental}
+- Umsetzung der verbleibenden Anforderungen
+- Verbesserung der Codequalität / der Dokumentation
+- Tests
+:::
+
+## Veröffentlichung
+::: header
+Ausblick
+:::
+
+::: {.incremental}
+- Veröffentlichung der Software auf Hochschulserver
+- Dozierende überprüfen die generierte PDF-Datei
+- Link zum System wird auf der Website der HSH eingebunden
+:::
+
+## In Zukunft
+::: header
+Ausblick
+:::
+
+::: {.incremental}
+- Anbindung an den Stunden-/ Prüfungs-/ Raumplan
+- Anbindung weiterer Studiengänge
+- System als Vorlage für andere Projekte
+:::
+
 # Vielen Dank!
 - Freunde und Familie
 - Betreuer

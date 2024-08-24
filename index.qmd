@@ -182,6 +182,84 @@ Entwurf
 - Designentscheidungen
 - Herausforderungen
 
+## Backend - Datenbank {auto-animate="true"}
+::: header
+Implementierung
+:::
+
+```prisma
+model Module {
+``` 
+
+## Backend - Datenbank {auto-animate="true"}
+::: header
+Implementierung
+:::
+
+```{code-line-numbers}
+model Module {
+ id Int @id @default(autoincrement())
+ name                String?
+``` 
+
+## Backend - Datenbank {auto-animate="true"}
+::: header
+Implementierung
+:::
+
+```prisma {code-line-numbers="4-5,8-10"}
+model Module {
+ id Int @id @default(autoincrement())
+ name                String?
+ degreeProgram       DegreeProgram @relation(fields: [degreeProgramId], references: [id])
+ degreeProgramId     Int
+...
+
+model DegreeProgram {
+  id                 Int           @id @default(autoincrement())
+  modules            Module[]
+...
+``` 
+
+## Backend - API {auto-animate="true"}
+```ts {code-line-numbers="3|4-6|1-2"}
+@ApiTags('Degrees')
+@Controller('degrees')
+export class DegreeController {
+  constructor(
+    private degreeService: DegreeService
+  ) {}
+```
+## Backend - API {auto-animate="true"}
+```ts {code-line-numbers="8-10"}
+@ApiTags('Degrees')
+@Controller('degrees')
+export class DegreeController {
+  constructor(
+    private degreeService: DegreeService
+  ) {}
+
+  @Get(':id')
+  findOne(@Param('id') id: string, @Req() request: Request): Promise<any> {
+  }
+}
+```
+## Backend - API {auto-animate="true"}
+```ts {code-line-numbers="10-11"}
+@ApiTags('Degrees')
+@Controller('degrees')
+export class DegreeController {
+  constructor(
+    private degreeService: DegreeService
+  ) {}
+
+  @Get(':id')
+  findOne(@Param('id') id: string, @Req() request: Request): Promise<any> {
+    const language = (request.headers as any)['language'];
+    return this.degreeService.findById(+id, language);
+  }
+}
+```
 
 ## UI-Framework
 ::: header
@@ -288,7 +366,7 @@ export class LanguageInterceptor implements HttpInterceptor {
 ## Modulbearbeitung
 ✅ Übersetzbarkeit
 
-✅ Datenbank mit benötigten Tabellen
+✅ Datenbank/API mit benötigten Tabellen
 
 🔜 Wie werden die Daten erstellt / bearbeitet?
 

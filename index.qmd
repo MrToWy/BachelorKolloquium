@@ -329,12 +329,30 @@ console.log(translate('title'));
 :::
 
 
-## Dynamische Übersetzungen
+## Dynamische Übersetzungen {auto-animate="true"}
 ::: header
 Implementierung
 :::
 
-```ts {code-line-numbers="1|11|17-21"}
+```ts {code-line-numbers="1"}
+export class LanguageInterceptor implements HttpInterceptor {
+  private language: string;
+
+  constructor(private languageService: LanguageService) {
+    this.language = this.languageService.languageCode;
+    this.languageService.languageSubject.subscribe((language) => {
+      this.language = language;
+    });
+  }
+}
+```
+
+## Dynamische Übersetzungen {auto-animate="true"}
+::: header
+Implementierung
+:::
+
+```ts {code-line-numbers="11|17-21"}
 export class LanguageInterceptor implements HttpInterceptor {
   private language: string;
 

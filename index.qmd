@@ -628,3 +628,12 @@ Ausblick
 - Freunde und Familie
 - Betreuer
 - Dozierende die für Interviews zur Verfügung standen
+
+## Übersetzungsentscheidung Idee 1 {visibility="uncounted"}
+![](images/reserve/idea1.svg)
+
+## Übersetzungsentscheidung Idee 2 {visibility="uncounted"}
+![](images/reserve/idea2.svg)
+
+## Übersetzungsentscheidung Idee 3 {visibility="uncounted"}
+![](images/reserve/idea3.svg)

@@ -625,9 +625,11 @@ Ausblick
 :::
 
 # Vielen Dank!
+::: notes 
 - Freunde und Familie
 - Betreuer
 - Dozierende die für Interviews zur Verfügung standen
+:::
 
 ## Übersetzungsentscheidung Idee 1 {visibility="uncounted"}
 ![](images/reserve/idea1.svg)
@@ -637,3 +639,182 @@ Ausblick
 
 ## Übersetzungsentscheidung Idee 3 {visibility="uncounted"}
 ![](images/reserve/idea3.svg)
+
+
+## Umsortieren der Translations {visibility="uncounted"}
+
+
+module-preview.component.ts 
+```html
+  <b>{{t('subTitle')}}</b>
+  <span>{{ module?.translations?.at(activeTranslationIndex)?.subtitle }}</span>
+```
+
+:::notes
+Was ist der einfachste Weg ein Modul abzuspeichern?
+
+Wir haben ein Modulobjekt, das alle relevaten Informationen enthält.
+
+Wenn wir das aufteilen würden in Modul und ModulTexte, hätten wir 2 Objekte, die wir ans Backend senden müssten.
+Siehe nächste Folie.
+:::
+
+
+## Update-Endpoint {visibility="uncounted"}
+
+``` ts {code-line-numbers="1-2|3-5|15|18-30|19-22|24-28|32-44"}
+async update(moduleDto: ModuleDto) {
+  const {
+    id,
+    responsibleId,
+    responsible,
+    requirementsHardId,
+    requirementsSoftId,
+    requirementsHard: requirementsHardNew,
+    requirementsSoft: requirementsSoftNew,
+    degreeProgramId,
+    groupId,
+    group,
+    translations,
+    subModules,
+    ...moduleData
+  } = moduleDto;
+
+  await this.prisma.$transaction(async (prisma) => {
+    await prisma.module.update({
+      where: { id },
+      data: moduleData
+    });
+
+    await this.updateRequirements(prisma, moduleDto);
+    await this.upsertModuleTranslations(prisma, moduleDto);
+    await this.connectResponsible(prisma, moduleDto);
+    await this.connectSubModules(prisma, moduleDto);
+    await this.connectGroup(prisma, moduleDto);
+  });
+}
+
+async connectResponsible(prisma: any, moduleDto: ModuleDto) {
+  const { responsibleId, id } = moduleDto;
+
+  if (!responsibleId) return;
+
+  await prisma.module.update({
+    where: { id },
+    data: {
+      responsible: responsibleId ? {
+        connect: { id: responsibleId }
+      } : undefined
+    }
+  });
+}
+```
+:::notes 
+Das Backend erhält ein Objekt, in dem alle Informationen des Moduls enthalten sind.
+
+Hier werden die verschiedenen Daten auseinandergepfückt und separat verarbeitet.
+:::
+
+
+## Vergleichsmethoden für Changelog {visibility="uncounted"}
+```ts
+const compareTranslations = (unchangedObject: any, newObject: any, baseFieldName: string) => {
+  unchangedObject.translations.forEach((oldTranslationObject: any, index: any) => {
+    const newTranslationObject = newObject.translations.find((newTranslation: any) => newTranslation.languageId === oldTranslationObject.languageId);
+    const languageAbbreviation = languages.find(l => l.id === oldTranslationObject.languageId)?.abbreviation;
+
+    if (newTranslationObject && languageAbbreviation) {
+      compareTranslationFields(oldTranslationObject, newTranslationObject, baseFieldName, languageAbbreviation);
+    }
+  });
+};
+...
+
+const compareArrayField = (unchangedObject: any, newObject: any, baseFieldName: string, field: string) => {
+  const unchangedObjectIds = unchangedObject[field].map((obj: any) => obj.id);
+  const newObjectIds = newObject[field].map((obj: any) => obj.id);
+
+  // Check if the arrays contain the same elements, ignore the order
+  if (JSON.stringify(unchangedObjectIds.sort()) !== JSON.stringify(newObjectIds.sort())) {
+    changes.push({
+      field: `${baseFieldName}.${String(field)}`,
+      oldValue: unchangedObjectIds,
+      newValue: newObjectIds
+    });
+  }
+};
+
+
+
+const comparePrimitiveField = (unchangedObject: any, newObject: any, baseFieldName: string, field: string) => {
+  if (unchangedObject[field] !== newObject[field]) {
+    changes.push({
+      field: `${baseFieldName}.${String(field)}`,
+      oldValue: unchangedObject[field],
+      newValue: newObject[field]
+    });
+  }
+};
+```
+
+::: notes
+
+Gekapselte Methoden die innerhalb einer anderen Methode genutzt werden.
+
+Stehen nicht wie andere Funktionen innerhalb der Klasse, weil sie nur für die eine Methode relevant sind.
+
+Nach dem Prinzip der Kapselung sollen nur die Methoden sichtbar sein, die benötigt werden. 
+
+Die hier gezeigten Methoden sind nur für die eine Methode relevant und müssen deshalb nur für die sichtbar sein.
+
+:::
+
+
+## Messung der Codequalität {visibility="uncounted"}
+::: {.incremental}
+- Richtwert: Cycolmatic Complexity <= 10
+:::
+
+::: notes
+
+Cycolmatic Complexity von 10 wurde gesetzt.
+Vorschlag von SonarQube
+
+Maximal 10 If-Statements in einer Methode
+
+Das heißt nicht, dass Code dadurch nie komplex ist und auch Code mit Komplexität von 20
+kann noch simpel sein. 
+
+Jedoch ist eine hohe Komplexität ein Indikator für komplizierten Code und man sollte das dann zumindest einmal prüfen.
+
+:::
+
+
+## UserService ist in Frontend und Backend {visibility="uncounted"}
+
+::: {.incremental}
+- Seperation of Concerns
+- Entkopplung
+:::
+
+::: notes
+
+Unterschiedliche Verantwortlichkeiten (Separation of Concerns)
+
+Backend: Geschäftslogik, Autorisierung 
+
+Frontend: Benutzerinteraktionen zu verarbeiten
+
+
+Entkopplung -> Flexibilität
+Es können unterschiedliche Technologien verwendet werden
+
+
+Anpassungen für UI
+Es kann notwendig sein, Daten im Frontend umzuwandeln, um sie besser anzeigen zu können
+
+
+Praktisch würde man eher die Dtos generieren lassen, statt den gleichen Code (z.B. mithilfe von npm Packages) zu verwenden
+
+
+:::

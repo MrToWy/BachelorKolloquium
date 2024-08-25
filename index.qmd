@@ -64,6 +64,13 @@ Jedes Modul hat eine Beschreibung.
 :::
 :::
 
+::: notes
+1. Studiengänge sind in Module unterteilt. Der Studiengang MDI hat z.B. die Module "Webtechnologien" und "Bachelorarbeit mit Kolloquium".
+2. Jedes Modul hat eine Beschreibung, wie rechts im Bild zu sehen
+3. Alle Beschreibungen eines Studiengangs sind in einem PDF zusammengefasst
+4. Um dieses PDF geht es heute
+:::
+
 ## Bisheriger Prozess
 ::: header
 Modulhandbücher
@@ -76,6 +83,13 @@ Modulhandbücher
 - Aus Datenbank wurden PDFs generiert
 :::
 
+::: notes
+1. Letztes Jahr wurden die Modulhandbücher noch in Word-Dokumenten verwaltet.
+2. Das das nicht gut ist, liegt auf der Hand: Keine Validierung, redundante Daten
+3. Deshalb wurden die Modulhandbücher von Professor Heine in eine Datenbank überführt
+4. Er hat außerdem ein Skript erstellt, um aus der Datenbank PDFs zu generieren
+:::
+
 ## Probleme
 ::: header
 Modulhandbücher
@@ -85,28 +99,42 @@ Direkter Zugriff auf Datenbank bringt Probleme mit sich:
 ::: {.incremental}
 - Software notwendig
 - Keine Versionierung
-- Keine Validierung
+- Wenig Validierung
 - Datenbank selbst enthält noch Redundanzen
 - -> Neues System notwendig
 :::
 
+::: notes
+- Nur Datenbank, keine Benutzeroberfläche, daher folgende Probleme
+:::
 
+## 
+✅ Modulhandbücher
 
+✅ Bisheriger Prozess & dessen Probleme
+
+🔜 Neues System
 
 # Zielgruppe
 Wer wird das neue System nutzen?
+
+Welche Anforderungen gibt es?
 
 ## Interessierte & Studierende
 ::: header
 Zielgruppe
 :::
 
+
 Welche Inhalte bietet das Studium?
 
+::: {.fragment}
 Welche Wahlpflichtmodule gibt es?
+:::
 
+::: {.fragment}
 Welche Voraussetzungen gibt es für Modul X?
-
+:::
 
 ##
 ::: header
@@ -120,8 +148,6 @@ Aktualisieren von Modulbeschreibungen
 Veröffentlichung von Modulhandbüchern
 :::
 
-# Anforderungen
-Auszug aus den Anforderungen
 
 ## Technische Anforderungen
 ::: header
@@ -405,6 +431,9 @@ Implementierung
 [Link zur Demo](https://studymodules.tobi.win/submodules/1)
 :::
 
+::: notes
+Mathe 1 in Mathe 12 umbenennen (Eng und Deutsch)
+:::
 
 ## PDF-Generierung
 ::: header
@@ -422,6 +451,110 @@ Implementierung
 Implementierung
 :::
 ![](images/Docker.png)
+
+## Podman Image
+::: header
+Implementierung
+:::
+
+```Dockerfile {code-line-numbers="1|6-12|15-18"}
+FROM node:alpine as build
+
+WORKDIR /project
+RUN npm install -g @angular/cli
+
+# only copy the package.json and package-lock.json to install dependencies (Efficient Layer Caching)
+COPY package*.json ./
+RUN npm ci
+
+# copy the rest of the files
+COPY . .
+RUN npm run build
+
+
+FROM nginx:alpine
+COPY --from=build /project/dist/study-modules/browser /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+```
+
+## Podman Compose
+```yml {code-line-numbers="6-11"}
+name: studymodules_project
+
+services:
+  frontend:
+    image: localhost/studymodules-frontend
+  backend:
+    image: localhost/studybase-backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - C:\Users\tobi\studybase\docker-volume:/app/docker-volume
+
+  documentation:
+    image: localhost/studymodules-documentation
+    ports:
+      - "8080:80"
+      - "443:443"
+  latex-api:
+    image: localhost/latex-api:latest
+    ports:
+      - "2345:8080"
+    build: .
+    command: make start
+    environment:
+      # SENTRY_DSN:
+      CACHE_HOST: cache
+    depends_on:
+      - backend
+
+  latex-poll-script:
+    image: localhost/studymodules-latex:latest
+
+volumes:
+  caddy_data:
+  caddy_config:
+```
+
+## Podman
+::: header
+Implementierung
+:::
+![](images/podman.png)
+
+## Dokumentation
+::: header
+Implementierung
+:::
+### Markdown
+- Anzeige direkt auf GitLab
+- Bearbeitung mit jedem Texteditor möglich
+- Einfache Strukturierung
+
+## Dokumentation
+::: header
+Implementierung
+:::
+![](images/documentation.png)
+
+## Dokumentation - Suche
+::: header
+Implementierung
+:::
+![](images/docSearch.png)
+
+
+## Recap
+✅ Frontend
+
+✅ Backend
+
+✅ Dokumentation
+
+✅ Podman-Container
+
+🔜 Was fehlt noch?
 
 # Fazit
 

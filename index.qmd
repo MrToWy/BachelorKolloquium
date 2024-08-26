@@ -355,6 +355,13 @@ console.log(translate('title'));
 ```
 :::
 
+::: notes
+Das als Beispiel für statische Übersetzungen.
+
+Daten aus der Datenbank müssen allerdings anders behandelt werden, das gucken wir uns jetzt an.
+
+:::
+
 
 ## Dynamische Übersetzungen {auto-animate="true"}
 ::: header

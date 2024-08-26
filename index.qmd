@@ -218,7 +218,7 @@ Implementierung
 model Module {
 ``` 
 
-## Backend - Datenbank {auto-animate="true"}
+## Backend - Datenbank {auto-animate="true" visibility="uncounted"}
 ::: header
 Implementierung
 :::
@@ -229,7 +229,7 @@ model Module {
  name                String?
 ``` 
 
-## Backend - Datenbank {auto-animate="true"}
+## Backend - Datenbank {auto-animate="true" visibility="uncounted"}
 ::: header
 Implementierung
 :::
@@ -257,7 +257,7 @@ export class DegreeController {
     private degreeService: DegreeService
   ) {}
 ```
-## Backend - API {auto-animate="true"}
+## Backend - API  {auto-animate="true" visibility="uncounted"}
 ```ts {code-line-numbers="8-10"}
 @ApiTags('Degrees')
 @Controller('degrees')
@@ -271,7 +271,7 @@ export class DegreeController {
   }
 }
 ```
-## Backend - API {auto-animate="true"}
+## Backend - API {auto-animate="true" visibility="uncounted"}
 ```ts {code-line-numbers="10-11"}
 @ApiTags('Degrees')
 @Controller('degrees')
@@ -328,7 +328,7 @@ HTML-Template:
 ```
 :::
 
-## Übersetzbarkeit - Beispiel {auto-animate="true"}
+## Übersetzbarkeit - Beispiel  {auto-animate="true" visibility="uncounted"}
 HTML-Template:
 
 ::: {data-id="box2"}
@@ -363,30 +363,14 @@ Daten aus der Datenbank müssen allerdings anders behandelt werden, das gucken w
 :::
 
 
-## Dynamische Übersetzungen {auto-animate="true"}
-::: header
-Implementierung
-:::
 
-```ts {code-line-numbers="1"}
-export class LanguageInterceptor implements HttpInterceptor {
-  private language: string;
-
-  constructor(private languageService: LanguageService) {
-    this.language = this.languageService.languageCode;
-    this.languageService.languageSubject.subscribe((language) => {
-      this.language = language;
-    });
-  }
-}
-```
 
 ## Dynamische Übersetzungen {auto-animate="true"}
 ::: header
 Implementierung
 :::
 
-```ts {code-line-numbers="11|17-21"}
+```ts {code-line-numbers="1|11|17-21"}
 export class LanguageInterceptor implements HttpInterceptor {
   private language: string;
 

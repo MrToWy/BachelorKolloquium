@@ -5,6 +5,7 @@ date: now
 date-format: "D. MMMM YYYY"
 format:
   revealjs:
+    multiplex: true
     header: Bachelor Kolloquium
     slide-number: true
     chalkboard:

@@ -625,10 +625,24 @@ Ausblick
 :::
 
 # Vielen Dank!
+
 ::: notes 
 - Freunde und Familie
 - Betreuer
 - Dozierende die für Interviews zur Verfügung standen
+
+
+Besondere Herausforderungen:
+- Konzept für Übersetzbarkeit
+- Kompilierung der LaTeX-Dateien
+
+Was würde ich anders machen:
+Meilensteine für die Implementierung setzen
+Welche Anforderung wann umgesetzt wird
+
+Worauf bin ich stolz:
+Alle wesentlichen Anforderungen erfüllt, sodass das System produktiv genutzt werden kann
+UI ist modern, benutzerfreundlich und übersichtlich
 :::
 
 ## Übersetzungsentscheidung Idee 1 {visibility="uncounted"}

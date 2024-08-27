@@ -234,7 +234,7 @@ Implementierung
 ```{code-line-numbers}
 model Module {
  id Int @id @default(autoincrement())
- name                String?
+ credits             Int
 ``` 
 
 ## Backend - Datenbank {auto-animate="true" visibility="uncounted"}
@@ -245,7 +245,7 @@ Implementierung
 ```prisma {code-line-numbers="4-5,8-10"}
 model Module {
  id Int @id @default(autoincrement())
- name                String?
+ credits             Int
  degreeProgram       DegreeProgram @relation(fields: [degreeProgramId], references: [id])
  degreeProgramId     Int
 ...

@@ -643,6 +643,12 @@ Welche Anforderung wann umgesetzt wird
 Worauf bin ich stolz:
 Alle wesentlichen Anforderungen erfüllt, sodass das System produktiv genutzt werden kann
 UI ist modern, benutzerfreundlich und übersichtlich
+
+Warum nicht PDF Generierung als eigener Service?
+- Wäre möglich, aber nicht notwendig
+- Würde die Komplexität erhöhen
+- Viele Abhängigkeiten, weil mehrere Endpunkte benötigt werden
+- Jetzt nur eine Abhängigkeit auf den Job-Endpunkt
 :::
 
 ## Übersetzungsentscheidung Idee 1 {visibility="uncounted"}
